@@ -11,6 +11,17 @@ const getTrainers = () => {
        
 }
 
+function getPokemon(trainerId) {
+
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({ trainer_id: trainerId })
+    }
+}
 const removePokemon = () => {
     document.addEventListener("click", e => {
         e.preventDefault()
@@ -30,7 +41,11 @@ const removePokemon = () => {
 
             fetch(POKEMONS_URL + "/" + pokeId, packet)
                 .then(res => res.json())
+                .then(pokemonObj => {
+                    const button = document.querySelector(`[data-pokemon-id="${pokemonObj.id}"]`)
+                    button.parentElement.remove()
 
+                })
         }
     })
 }
