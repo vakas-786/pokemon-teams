@@ -11,6 +11,31 @@ const getTrainers = () => {
        
 }
 
+const removePokemon = () => {
+    document.addEventListener("click", e => {
+        e.preventDefault()
+        if (e.target.matches("button.release")) {
+
+            const removeButton = e.target
+            const pokeId = removeButton.dataset.pokemonId
+
+            const packet = {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application/json"
+
+                }
+            }
+
+            fetch(POKEMONS_URL + "/" + pokeId, packet)
+                .then(res => res.json())
+
+        }
+    })
+}
+
+
 const buildTrainerCard = (trainers) => {
     trainers.forEach(trainerAttribute => {
        const pokemons =  trainerAttribute.pokemons
@@ -37,10 +62,9 @@ const buildTrainerCard = (trainers) => {
        }
        trainerdivCard.appendChild(trainerUl)
        trainerMain.appendChild(trainerdivCard)
-
-
     })
 
 }
 
 getTrainers()
+removePokemon()
