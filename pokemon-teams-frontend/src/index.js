@@ -11,16 +11,35 @@ const getTrainers = () => {
        
 }
 
-function getPokemon(trainerId) {
 
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({ trainer_id: trainerId })
-    }
+const addPokemon = () => {
+    document.addEventListener("click", (e) => {
+        if (e.target.matches("body > main > div:nth-child(1) > button")) {
+
+            const addButton = e.target    
+            const trainerId = addButton.dataset.trainerId 
+            
+
+            const options = {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({trainer_id: trainerId})
+            }
+
+            fetch(POKEMONS_URL, options)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error){
+                    alert(data.error)
+                } else {
+                    buildTrainerCard(trainers)
+                }
+            })
+        }
+
+    })
 }
 const removePokemon = () => {
     document.addEventListener("click", e => {
